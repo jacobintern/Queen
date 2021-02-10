@@ -18,7 +18,7 @@ namespace Queen
             // Array.Find(arr, o => (o - 33) % 9 == 0) == 0 &&
             // Array.Find(arr, o => o % 10 == 2) == 0 &&
             // Array.Find(arr, o => o / 10 == 30 / 10) == 0);
-            int qNum = 6;
+            int qNum = 8;
             OutputResult(10, qNum, new int[qNum]);
             Console.WriteLine("result is " + successCount);
         }
