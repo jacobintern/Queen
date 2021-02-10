@@ -51,14 +51,13 @@ namespace Queen
         static bool CheckArround(int[] arr, int rowNum, int colNum, int qNum)
         {
             // false 有皇后 true 無皇后
-            // if (Array.Find(arr, o => (o - rowNum + colNum) % 11 == 0) == 0 &&
-            //     Array.Find(arr, o => (o - rowNum + colNum) % 9 == 0) == 0 &&
-            //     Array.Find(arr, o => o % 10 == colNum) == 0 &&
-            //     Array.Find(arr, o => o / 10 == rowNum / 10) == 0)
-            // {
-            //     return true;
-            // }
-            // return false;
+            // 檢查放置的位置是否符合皇后的規則
+            // * X X X * *
+            // X X Q X X X
+            // * X X X * *
+            // X * X * X *
+            // * * X * * X
+            // 除了自己的九宮格內以外，不能在直線，橫線，斜線上
             if (Array.Find(arr, o => (o + 11) % 11 == (rowNum + colNum + 11) % 11) == 0 &&
             Array.Find(arr, o => (o + 9) % 9 == (rowNum + colNum + 9) % 9) == 0 &&
             Array.Find(arr, o => o % 10 == colNum) == 0 &&
