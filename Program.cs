@@ -7,7 +7,7 @@ namespace Queen
         static int successCount = 0;
         static void Main(string[] args)
         {
-            int qNum = 7;
+            int qNum = 8;
             OutputResult(10, qNum, new int[qNum]);
             Console.WriteLine("result is " + successCount);
         }
@@ -55,7 +55,11 @@ namespace Queen
             // 左上
             for (int i = 1; i < qNum; i++)
             {
-                if (Array.Find(arr, o => o == ((rowNum + colNum) - (i * 11))) > 0)
+                if ((rowNum + colNum) / 10 == 1 || (rowNum + colNum) % 10 == 0)
+                {
+                    break;
+                }
+                else if (Array.Find(arr, o => o == ((rowNum + colNum) - (i * 11))) > 0)
                 {
                     leftTop = false;
                     break;
@@ -72,16 +76,20 @@ namespace Queen
             // 左下
             for (int i = 1; i < qNum; i++)
             {
-                if (Array.Find(arr, o => o == ((rowNum + colNum) + (i * 9))) > 0)
+                if ((rowNum + colNum) / 10 == qNum || (rowNum + colNum) % 10 == 0)
+                {
+                    break;
+                }
+                else if (Array.Find(arr, o => o == ((rowNum + colNum) + (i * 9))) > 0)
                 {
                     leftBottom = false;
                     break;
                 }
-                else if (((rowNum + colNum) - (i * 11)) % 10 == 0)
+                else if (((rowNum + colNum) + (i * 9)) % 10 == 0)
                 {
                     break;
                 }
-                else if (((rowNum + colNum) - (i * 11)) / 10 == qNum)
+                else if (((rowNum + colNum) + (i * 9)) / 10 == qNum)
                 {
                     break;
                 }
@@ -89,12 +97,16 @@ namespace Queen
             // 右上
             for (int i = 1; i < qNum; i++)
             {
-                if (Array.Find(arr, o => o == ((rowNum + colNum) - (i * 9))) > 0)
+                if ((rowNum + colNum) / 10 == 1 || (rowNum + colNum) % 10 == qNum - 1)
                 {
-                    leftTop = false;
                     break;
                 }
-                else if (((rowNum + colNum) - (i * 9)) % 10 == 0)
+                else if (Array.Find(arr, o => o == ((rowNum + colNum) - (i * 9))) > 0)
+                {
+                    rightTop = false;
+                    break;
+                }
+                else if (((rowNum + colNum) - (i * 9)) % 10 == qNum - 1)
                 {
                     break;
                 }
@@ -106,16 +118,20 @@ namespace Queen
             // 右下
             for (int i = 1; i < qNum; i++)
             {
+                if ((rowNum + colNum) / 10 == qNum || (rowNum + colNum) % 10 == qNum - 1)
+                {
+                    break;
+                }
                 if (Array.Find(arr, o => o == ((rowNum + colNum) + (i * 9))) > 0)
                 {
                     rightBottom = false;
                     break;
                 }
-                else if (((rowNum + colNum) - (i * 9)) % 10 == 0)
+                else if (((rowNum + colNum) + (i * 11)) % 10 == 0)
                 {
                     break;
                 }
-                else if (((rowNum + colNum) - (i * 9)) / 10 == qNum)
+                else if (((rowNum + colNum) + (i * 11)) / 10 == qNum)
                 {
                     break;
                 }
