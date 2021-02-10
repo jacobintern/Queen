@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Queen
 {
@@ -9,16 +7,7 @@ namespace Queen
         static int successCount = 0;
         static void Main(string[] args)
         {
-            // int[] arr = new int[2] { 10, 22 };
-            // Console.WriteLine(Array.Find(arr, o => (o - 33) % 11 == 0) == 0);
-            // Console.WriteLine(Array.Find(arr, o => (o - 33) % 9 == 0) == 0);
-            // Console.WriteLine(Array.Find(arr, o => o % 10 == 2) == 0);
-            // Console.WriteLine(Array.Find(arr, o => o / 10 == 30 / 10) == 0);
-            // Console.WriteLine(Array.Find(arr, o => (o - 33) % 11 == 0) == 0 &&
-            // Array.Find(arr, o => (o - 33) % 9 == 0) == 0 &&
-            // Array.Find(arr, o => o % 10 == 2) == 0 &&
-            // Array.Find(arr, o => o / 10 == 30 / 10) == 0);
-            int qNum = 8;
+            int qNum = 7;
             OutputResult(10, qNum, new int[qNum]);
             Console.WriteLine("result is " + successCount);
         }
@@ -29,7 +18,7 @@ namespace Queen
             // 如果皇后數量達標
             if (q == qNum)
             {
-                PrintAns(queenArr);
+                PrintAns(queenArr, qNum);
                 successCount++;
                 return;
             }
@@ -58,20 +47,110 @@ namespace Queen
             // X * X * X *
             // * * X * * X
             // 除了自己的九宮格內以外，不能在直線，橫線，斜線上
-            if (Array.Find(arr, o => (o + 11) % 11 == (rowNum + colNum + 11) % 11) == 0 &&
-            Array.Find(arr, o => (o + 9) % 9 == (rowNum + colNum + 9) % 9) == 0 &&
-            Array.Find(arr, o => o % 10 == colNum) == 0 &&
-            Array.Find(arr, o => o / 10 == rowNum / 10) == 0)
+            // 檢查斜角 往上檢查
+            bool leftTop = true;
+            bool rightTop = true;
+            bool leftBottom = true;
+            bool rightBottom = true;
+            // 左上
+            for (int i = 1; i < qNum; i++)
+            {
+                if (Array.Find(arr, o => o == ((rowNum + colNum) - (i * 11))) > 0)
+                {
+                    leftTop = false;
+                    break;
+                }
+                else if (((rowNum + colNum) - (i * 11)) % 10 == 0)
+                {
+                    break;
+                }
+                else if (((rowNum + colNum) - (i * 11)) / 10 == 1)
+                {
+                    break;
+                }
+            }
+            // 左下
+            for (int i = 1; i < qNum; i++)
+            {
+                if (Array.Find(arr, o => o == ((rowNum + colNum) + (i * 9))) > 0)
+                {
+                    leftBottom = false;
+                    break;
+                }
+                else if (((rowNum + colNum) - (i * 11)) % 10 == 0)
+                {
+                    break;
+                }
+                else if (((rowNum + colNum) - (i * 11)) / 10 == qNum)
+                {
+                    break;
+                }
+            }
+            // 右上
+            for (int i = 1; i < qNum; i++)
+            {
+                if (Array.Find(arr, o => o == ((rowNum + colNum) - (i * 9))) > 0)
+                {
+                    leftTop = false;
+                    break;
+                }
+                else if (((rowNum + colNum) - (i * 9)) % 10 == 0)
+                {
+                    break;
+                }
+                else if (((rowNum + colNum) - (i * 9)) / 10 == 1)
+                {
+                    break;
+                }
+            }
+            // 右下
+            for (int i = 1; i < qNum; i++)
+            {
+                if (Array.Find(arr, o => o == ((rowNum + colNum) + (i * 9))) > 0)
+                {
+                    rightBottom = false;
+                    break;
+                }
+                else if (((rowNum + colNum) - (i * 9)) % 10 == 0)
+                {
+                    break;
+                }
+                else if (((rowNum + colNum) - (i * 9)) / 10 == qNum)
+                {
+                    break;
+                }
+            }
+            if (Array.Find(arr, o => o % 10 == colNum) == 0 &&
+            Array.Find(arr, o => o / 10 == rowNum / 10) == 0 &&
+            leftTop && rightTop && leftBottom && rightBottom)
             {
                 return true;
             }
             return false;
         }
 
-        static void PrintAns(int[] arr)
+        static void PrintAns(int[] arr, int qNum)
         {
-            Array.ForEach(arr, o => Console.Write(o + ", "));
-            Console.WriteLine();
+            string tmp = string.Empty;
+            Array.ForEach(arr, o => tmp += o + ", ");
+            Console.WriteLine(tmp);
+            // 行
+            for (int i = 1; i <= qNum; i++)
+            {
+                // 列
+                for (int j = 0; j < qNum; j++)
+                {
+                    if (Array.Find(arr, o => o == (i * 10 + j)) > 0)
+                    {
+                        Console.Write("[Q]");
+                    }
+                    else
+                    {
+                        Console.Write("[*]");
+                    }
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
