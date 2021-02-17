@@ -7,6 +7,8 @@ namespace Queen
         static int successCount = 0;
         static void Main(string[] args)
         {
+            // int[] arr = new int[] { 12, 24 };
+            // Console.WriteLine(Array.Find(arr, o => o % 9 == (31) % 9));
             int qNum = 8;
             OutputResult(10, qNum, new int[qNum]);
             Console.WriteLine("result is " + successCount);
@@ -47,7 +49,7 @@ namespace Queen
             // X * X * X *
             // * * X * * X
             // 除了自己的九宮格內以外，不能在直線，橫線，斜線上
-            // 檢查斜角 往上檢查
+            // 檢查斜角 檢查邊界
             bool leftTop = true;
             bool rightTop = true;
             bool leftBottom = true;
@@ -122,7 +124,7 @@ namespace Queen
                 {
                     break;
                 }
-                if (Array.Find(arr, o => o == ((rowNum + colNum) + (i * 9))) > 0)
+                else if (Array.Find(arr, o => o == ((rowNum + colNum) + (i * 9))) > 0)
                 {
                     rightBottom = false;
                     break;
@@ -142,6 +144,13 @@ namespace Queen
             {
                 return true;
             }
+            // if (Array.Find(arr, o => o % 10 == colNum) == 0 &&
+            // Array.Find(arr, o => o / 10 == rowNum / 10) == 0 &&
+            // Array.Find(arr, o => o % 9 == (rowNum + colNum) % 9) == 0 &&
+            // Array.Find(arr, o => o % 11 == (rowNum + colNum) % 11) == 0)
+            // {
+            //     return true;
+            // }
             return false;
         }
 
